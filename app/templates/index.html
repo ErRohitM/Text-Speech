@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-section col-12" style="display:inline-flex; padding:5rem; background-color: var(--bs-gray-700)">
+<div class="col-7">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <form method="POST" action="/"  enctype="multipart/form-data">
+          <h1 class="h3 mb-3 fw-normal">Details</h1>
+          <label for="text">Enter Text:</label>
+          <textarea id="text" name="text" rows="5" cols="50" required></textarea>
+
+          <br/><br/>
+
+          <label for="lang">Select Language:</label>
+          <select id="lang" name="lang" required>
+              <option value="en">English</option>
+              <option value="hi">Hindi</option>
+              <option value="mr">Marathi</option>
+              <option value="kn">Kannada</option>
+              <!-- Add more language options as needed -->
+          </select>
+          <br/><br/>
+          <div class="form-floating">
+          </div>
+          <button class="btn btn-primary w-100 py-2" type="submit">Play</button>
+        </form>
+      </div>
+    </div>
+</div>
+<div class="col-3  text-center" style="padding:5rem;">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <button id="play"><image width="50" height="50" src="{{ url_for('static', path='speaker.png') }}" alt="speak"></image></button>
+    </div>
+  </div>
+</div>
+</div>
+    <script>
+        let play = document.getElementById("play");
+        function playMusic() {
+          const audio = new Audio('{{ url_for('static', path='speak.mp3') }}');
+            audio.play();
+        }
+        play.addEventListener("click", playMusic);
+    </script>
+{% endblock %}
