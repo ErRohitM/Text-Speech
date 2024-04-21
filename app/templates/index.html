@@ -1,40 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="page-section col-12" style="display:inline-flex; padding:5rem; background-color: var(--bs-gray-700)">
-<div class="col-7">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <form method="POST" action="/"  enctype="multipart/form-data">
-          <h1 class="h3 mb-3 fw-normal">Details</h1>
+<div class="card shadow-sm col-12" style="padding-top: 4rem;">
+  <div class="card-body">
+    <form method="POST" action="/" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-12">
           <label for="text">Enter Text:</label>
-          <textarea id="text" name="text" rows="5" cols="50" required></textarea>
-
-          <br/><br/>
-
-          <label for="lang">Select Language:</label>
-          <select id="lang" name="lang" required>
-              <option value="en">English</option>
-              <option value="hi">Hindi</option>
-              <option value="mr">Marathi</option>
-              <option value="kn">Kannada</option>
-              <!-- Add more language options as needed -->
-          </select>
-          <br/><br/>
-          <div class="form-floating">
-          </div>
-          <button class="btn btn-primary w-100 py-2" type="submit">Play</button>
-        </form>
+          <textarea id="text" name="text" rows="2" class="form-control" style="resize: none;" required></textarea>
+        </div>
       </div>
-    </div>
-</div>
-<div class="col-3  text-center" style="padding:5rem;">
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <button id="play"><image width="50" height="50" src="{{ url_for('static', path='speaker.png') }}" alt="speak"></image></button>
+
+      <div class="row mt-3">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <label for="lang" style="font-size: 1.2rem;">Select Language:</label>
+          <select id="lang" name="lang" class="form-select" required>
+            <option value="en">English</option>
+            <option value="hi">Hindi</option>
+            <option value="mr">Marathi</option>
+            <option value="kn">Kannada</option>
+            <!-- Add more language options as needed -->
+          </select>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+          <button class="btn btn-primary py-2" type="submit">Play</button>
+          <button class="btn btn-primary py-2" id="pasteButton" type="submit">Paste</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card-body text-center">
+        <button id="play">
+          <img width="50" height="50" src="{{ url_for('static', path='speaker.png') }}" alt="speak">
+        </button>
+      </div>
     </div>
   </div>
 </div>
-</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const pasteButton = document.getElementById('pasteButton');
+    const textarea = document.getElementById('text');
+
+    pasteButton.addEventListener('click', function() {
+      navigator.clipboard.readText().then(function(text) {
+        textarea.innerHTML = text;
+        console.log(textarea.innerHTML);
+      }).catch(function(err) {
+        console.error('Failed to read clipboard contents: ', err);
+      });
+    });
+  });
+</script>
     <script>
         let play = document.getElementById("play");
         function playMusic() {
