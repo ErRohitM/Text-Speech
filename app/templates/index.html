@@ -38,21 +38,6 @@
     </div>
   </div>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const pasteButton = document.getElementById('pasteButton');
-    const textarea = document.getElementById('text');
-
-    pasteButton.addEventListener('click', function() {
-      navigator.clipboard.readText().then(function(text) {
-        textarea.innerHTML = text;
-        console.log(textarea.innerHTML);
-      }).catch(function(err) {
-        console.error('Failed to read clipboard contents: ', err);
-      });
-    });
-  });
-</script>
     <script>
         let play = document.getElementById("play");
         function playMusic() {
