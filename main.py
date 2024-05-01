@@ -3,6 +3,6 @@ from os import getenv
 
 
 if __name__ == '__main__':
-    port = int(getenv("PORT", 9000))
+    port = int(getenv("PORT", 8000))
     # uvicorn.run("app.app:app", host="192.168.43.1", port = port, reload=True)
-    uvicorn.run("app.app:app", host="127.0.0.1", port = port, reload=True )
+    uvicorn.run("app.app:app", host="100.89.68.100", port = port, reload=True )
