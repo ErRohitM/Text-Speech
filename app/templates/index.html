@@ -24,8 +24,13 @@
         <div class="col-md-6 text-md-end mt-3 mt-md-0">
           <button class="btn btn-primary py-2" type="submit">Play</button>
         </div>
+       
       </div>
     </form>
+    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+      <button class="btn btn-primary py-2" id="convert_text" onclick="just_text();" type="submit">Convert</button>
+    </div>
+   
   </div>
 
   <div class="row mt-4">
@@ -39,11 +44,49 @@
   </div>
 </div>
     <script>
+      function just_text() {
+        let lang_selection = document.getElementById("lang").value;
+        let text_area = document.getElementById("text").value;
+        console.log(text_area);
+    
+        // Prepare the data to be sent in the POST request
+        let data = {
+            lang: lang_selection,
+            text: text_area
+        };
+    
+        // Make a POST request to the text_only endpoint
+        fetch('/text_only', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle response data here
+            console.log('Response:', data);
+        })
+        .catch(error => {
+            // Handle errors here
+            console.error('Error:', error);
+        });
+    }
+    
+      
         let play = document.getElementById("play");
         function playMusic() {
           const audio = new Audio('{{ url_for('static', path='speak.mp3') }}');
             audio.play();
         }
         play.addEventListener("click", playMusic);
+
+        
     </script>
 {% endblock %}

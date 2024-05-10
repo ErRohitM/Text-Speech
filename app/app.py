@@ -4,6 +4,7 @@ from app.utils import text_to_speech, lang_converter
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import base64
+from pydantic import BaseModel
 
 
 
@@ -58,3 +59,18 @@ def upload(request: Request, file: UploadFile = File(...)):
     base64_encoded_image = base64.b64encode(contents).decode("utf-8")
 
     return templates.TemplateResponse("display.html", {"request": request,  "myImage": base64_encoded_image})
+
+class TextRequest(BaseModel):
+    lang: str
+    text: str
+
+@app.post("/text_only")
+async def text_only(request: TextRequest):
+    text = request.text
+    lang = request.lang
+    converted = lang_converter(text, lang)
+    print(converted)  # Print the received text
+    return {"message": "Text received successfully"}
+    # return templates.TemplateResponse("index.html", {"request": request})
+
+    # return {"text": converted}
